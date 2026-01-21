@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Forecast extends Model
+{
+    protected $fillable = [
+        'company_id',
+        'forecast_start',
+        'forecast_end',
+        'predicted_income',
+        'predicted_expense',
+        'predicted_balance',
+        'risk_level',
+    ];
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+}
