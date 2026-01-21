@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        // 1. companies
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -44,7 +43,6 @@ return new class extends Migration {
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
-        // 3. accounts
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
@@ -54,14 +52,12 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // 4. categories
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->enum('type', ['income','expense']);
         });
 
-        // 5. transactions
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
@@ -74,7 +70,6 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // 6. cashflow_summary
         Schema::create('cashflow_summary', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
@@ -86,7 +81,6 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // 7. forecasts
         Schema::create('forecasts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
@@ -99,7 +93,6 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // 8. stress_tests
         Schema::create('stress_tests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
@@ -110,7 +103,6 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-// 9. ai_recommendations
         Schema::create('ai_recommendations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
@@ -120,7 +112,6 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // 10. reports
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
@@ -131,7 +122,6 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        // 11. activity_logs
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();

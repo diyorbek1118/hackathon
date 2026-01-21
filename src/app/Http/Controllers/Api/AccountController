@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Account;
+
+class AccountController extends Controller
+{
+    public function index() {
+        return response()->json(Account::all());
+    }
+
+    public function store(Request $request) {
+        $data = $request->validate([
+            'company_id'=>'required|exists:companies,id',
+            'name'=>'required|string|max:255',
+            'type'=>'required|in:cash,bank,wallet',
+            'balance'=>'nullable|numeric'
+        ]);
+        $account = Account::create($data);
+        return response()->json($account, 201);
+    }
+
+    public function show($id) {
+        return response()->json(Account::findOrFail($id));
+    }
+
+    public function update(Request $request, $id) {
+        $account = Account::findOrFail($id);
+        $data = $request->validate([
+            'company_id'=>'sometimes|exists:companies,id',
+            'name'=>'sometimes|string|max:255',
+            'type'=>'sometimes|in:cash,bank,wallet',
+            'balance'=>'sometimes|numeric'
+        ]);
+        $account->update($data);
+        return response()->json($account);
+    }
+
+    public function destroy($id) {
+        Account::findOrFail($id)->delete();
+        return response()->json(['message'=>'Account deleted']);
+    }
+}
