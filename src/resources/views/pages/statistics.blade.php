@@ -45,17 +45,18 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <a href="index.html"
+                    <a href="{{ route('pages.main') }}"
                         class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
                         CashFlow AI
                     </a>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html"
+                    <a href="{{ route('pages.main') }}"
                         class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">Asosiy</a>
-                    <a href="statistics.html" class="text-blue-600 dark:text-blue-400 font-medium">Statistika</a>
-                    <a href="forecast.html"
+                    <a href="{{ route('pages.statistics') }}"
+                        class="text-blue-600 dark:text-blue-400 font-medium">Statistika</a>
+                    <a href="{{ route('pages.forecast') }}"
                         class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">Prognoz</a>
 
                     <!-- Theme Toggle -->
@@ -84,10 +85,11 @@
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-slate-200 dark:border-slate-800 mt-2">
                 <div class="flex flex-col space-y-3 pt-4">
-                    <a href="index.html"
+                    <a href="{{ route('pages.main') }}"
                         class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">Asosiy</a>
-                    <a href="statistics.html" class="text-blue-600 dark:text-blue-400 font-medium py-2">Statistika</a>
-                    <a href="forecast.html"
+                    <a href="{{ route('pages.statistics') }}"
+                        class="text-blue-600 dark:text-blue-400 font-medium py-2">Statistika</a>
+                    <a href="{{ route('pages.forecast') }}"
                         class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">Prognoz</a>
                 </div>
             </div>

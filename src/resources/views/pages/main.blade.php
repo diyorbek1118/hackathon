@@ -43,17 +43,17 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <a href="index.html"
+                    <a href="{{ route('pages.main') }}"
                         class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
                         CashFlow AI
                     </a>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-blue-600 dark:text-blue-400 font-medium">Asosiy</a>
-                    <a href="statistics.html"
+                    <a href="{{ route('pages.main') }}" class="text-blue-600 dark:text-blue-400 font-medium">Asosiy</a>
+                    <a href="{{ route('pages.statistics') }}"
                         class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">Statistika</a>
-                    <a href="forecast.html"
+                    <a href="{{ route('pages.forecast') }}"
                         class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">Prognoz</a>
                     <a href="#pricing"
                         class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">Narxlar</a>
@@ -84,10 +84,11 @@
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-slate-200 dark:border-slate-800 mt-2">
                 <div class="flex flex-col space-y-3 pt-4">
-                    <a href="index.html" class="text-blue-600 dark:text-blue-400 font-medium py-2">Asosiy</a>
-                    <a href="statistics.html"
+                    <a href="{{ route('pages.main') }}"
+                        class="text-blue-600 dark:text-blue-400 font-medium py-2">Asosiy</a>
+                    <a href="{{ route('pages.statistics') }}"
                         class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">Statistika</a>
-                    <a href="forecast.html"
+                    <a href="{{ route('pages.forecast') }}"
                         class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">Prognoz</a>
                     <a href="#pricing"
                         class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium py-2">Narxlar</a>
@@ -129,7 +130,7 @@
                     </p>
 
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="statistics.html"
+                        <a href="{{ route('pages.statistics') }}"
                             class="px-8 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-lg font-medium transition-all flex items-center justify-center group">
                             Statistikani ko'ring
                             <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
@@ -138,7 +139,7 @@
                                     d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                             </svg>
                         </a>
-                        <a href="forecast.html"
+                        <a href="{{ route('pages.forecast') }}"
                             class="px-8 py-3 border-2 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg font-medium transition-all flex items-center justify-center">
                             Prognoz olish
                         </a>
@@ -574,7 +575,7 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-                    <a href="statistics.html"
+                    <a href="{{ route('pages.statistics') }}"
                         class="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 font-semibold rounded-lg transition-all flex items-center group">
                         Bepul sinab ko'ring
                         <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
@@ -583,7 +584,7 @@
                                 d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                         </svg>
                     </a>
-                    <a href="forecast.html"
+                    <a href="{{ route('pages.forecast') }}"
                         class="px-8 py-3 border-2 border-white text-white hover:bg-white/10 font-semibold rounded-lg transition-all">
                         Prognoz ko'rish
                     </a>
@@ -609,7 +610,7 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <div>
-                    <a href="index.html"
+                    <a href="{{ route('pages.main') }}"
                         class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-4 inline-block">
                         CashFlow AI
                     </a>
@@ -620,10 +621,12 @@
                 <div>
                     <h3 class="font-semibold text-slate-900 dark:text-white mb-4">Sahifalar</h3>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="index.html" class="hover:text-blue-600 dark:hover:text-blue-400">Asosiy</a></li>
-                        <li><a href="statistics.html"
+                        <li><a href="{{ route('pages.main') }}"
+                                class="hover:text-blue-600 dark:hover:text-blue-400">Asosiy</a></li>
+                        <li><a href="{{ route('pages.statistics') }}"
                                 class="hover:text-blue-600 dark:hover:text-blue-400">Statistika</a></li>
-                        <li><a href="forecast.html" class="hover:text-blue-600 dark:hover:text-blue-400">Prognoz</a>
+                        <li><a href="{{ route('pages.forecast') }}"
+                                class="hover:text-blue-600 dark:hover:text-blue-400">Prognoz</a>
                         </li>
                     </ul>
                 </div>
