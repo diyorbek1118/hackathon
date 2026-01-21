@@ -1,3 +1,4 @@
+
 // Statistics Page JavaScript
 
 let currentPeriod = 'month';
