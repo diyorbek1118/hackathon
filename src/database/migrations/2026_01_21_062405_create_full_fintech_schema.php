@@ -87,39 +87,12 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('ai_recommendations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
-            $table->string('title');
-            $table->text('description');
-            $table->enum('priority', ['low','medium','high']);
-            $table->timestamps();
-        });
+    
 
-        Schema::create('reports', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
-            $table->enum('type', ['monthly','quarterly','custom']);
-            $table->date('period_start');
-            $table->date('period_end');
-            $table->string('file_path');
-            $table->timestamps();
-        });
-
-        Schema::create('activity_logs', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('action');
-            $table->json('meta')->nullable();
-            $table->timestamps();
-        });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('activity_logs');
-        Schema::dropIfExists('reports');
-        Schema::dropIfExists('ai_recommendations');
         Schema::dropIfExists('stress_tests');
         Schema::dropIfExists('forecasts');
         Schema::dropIfExists('cashflow_summary');

@@ -91,51 +91,51 @@ class ForecastService
         $currentDate = Carbon::now()->format('Y-m-d');
 
         return <<<PROMPT
-You are a financial AI assistant specializing in cash flow forecasting. Analyze historical cash flow data and generate accurate predictions for next {$monthsToPredict} months.
-
-COMPANY INFORMATION:
-- Name: {$company->name}
-- Industry: {$company->industry}
-- Currency: {$company->currency}
-- Average Monthly Income: {$company->monthly_avg_income}
-- Average Monthly Expense: {$company->monthly_avg_expense}
-
-HISTORICAL CASH FLOW DATA:
-{$historicalJson}
-
-TASK:
-Generate cash flow predictions for next {$monthsToPredict} months starting from {$currentDate}. Consider:
-1. Seasonal patterns in historical data
-2. Income and expense trends
-3. Net cash flow patterns
-4. Industry-specific factors
-5. Economic indicators
-
-OUTPUT REQUIREMENTS:
-Return ONLY a valid JSON array with the following structure:
-[
-  {
-    "month": "YYYY-MM-01",
-    "predicted_income": 123456.78,
-    "predicted_expense": 98765.43,
-    "predicted_balance": 24691.35,
-    "risk_level": "low|medium|high",
-    "confidence_score": 0.85,
-    "insights": "Brief explanation of the prediction"
-  }
-]
-
-RISK LEVEL CRITERIA:
-- "low": Positive cash flow, stable patterns
-- "medium": Moderate cash flow, some volatility
-- "high": Negative cash flow or high volatility
-
-IMPORTANT:
-- Return ONLY the JSON array, no additional text
-- All monetary values should be in {$company->currency}
-- Use realistic predictions based on the historical patterns
-- Include confidence scores between 0.1 and 1.0
-PROMPT;
+        You are a financial AI assistant specializing in cash flow forecasting. Analyze historical cash flow data and generate accurate predictions for next {$monthsToPredict} months.
+            
+        COMPANY INFORMATION:
+        - Name: {$company->name}
+        - Industry: {$company->industry}
+        - Currency: {$company->currency}
+        - Average Monthly Income: {$company->monthly_avg_income}
+        - Average Monthly Expense: {$company->monthly_avg_expense}
+            
+        HISTORICAL CASH FLOW DATA:
+        {$historicalJson}
+            
+        TASK:
+        Generate cash flow predictions for next {$monthsToPredict} months starting from {$currentDate}. Consider:
+        1. Seasonal patterns in historical data
+        2. Income and expense trends
+        3. Net cash flow patterns
+        4. Industry-specific factors
+        5. Economic indicators
+        
+        OUTPUT REQUIREMENTS:
+        Return ONLY a valid JSON array with the following structure:
+        [
+          {
+            "month": "YYYY-MM-01",
+            "predicted_income": 123456.78,
+            "predicted_expense": 98765.43,
+            "predicted_balance": 24691.35,
+            "risk_level": "low|medium|high",
+            "confidence_score": 0.85,
+            "insights": "Brief explanation of the prediction"
+          }
+        ]
+        
+        RISK LEVEL CRITERIA:
+        - "low": Positive cash flow, stable patterns
+        - "medium": Moderate cash flow, some volatility
+        - "high": Negative cash flow or high volatility
+        
+        IMPORTANT:
+        - Return ONLY the JSON array, no additional text
+        - All monetary values should be in {$company->currency}
+        - Use realistic predictions based on the historical patterns
+        - Include confidence scores between 0.1 and 1.0
+        PROMPT;
     }
 
     private function sendToAI(array $request): array
