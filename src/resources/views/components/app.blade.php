@@ -64,17 +64,10 @@
                     @endauth
 
                     @guest
-                        <a href="#" class="inline-block">
+                        <a href="{{ route('pages.login') }}" class="inline-block">
                             <span
                                 class="px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-600 dark:text-blue-400 text-sm font-medium">
                                 Login
-                            </span>
-                        </a>
-
-                        <a href="#" class="inline-block">
-                            <span
-                                class="px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-600 dark:text-blue-400 text-sm font-medium">
-                                Sign up
                             </span>
                         </a>
                     @endguest

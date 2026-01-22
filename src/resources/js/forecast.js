@@ -3,28 +3,63 @@
 let currentForecastPeriod = 30;
 let forecastChart;
 
+
+async function loadForecastData(days) {
+    try {
+        showLoading();
+
+        const response = await fetch(`/pages/chartData?days=${days}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Ma\'lumot yuklashda xatolik');
+        }
+
+        forecastData = await response.json();
+        console.log('Loaded forecast data:', forecastData);
+
+        // Update UI with new data
+        updateUI();
+        hideLoading();
+
+    } catch (error) {
+        console.error('Error loading forecast:', error);
+        hideLoading();
+        showError('Ma\'lumot yuklashda xatolik yuz berdi. Iltimos qaytadan urinib ko\'ring.');
+    }
+}
+
+console.log(loadForecastData(10));
+
+
 // Sample forecast data
 const forecastData = {
     30: {
-        labels: Array.from({length: 30}, (_, i) => `${i + 1}-kun`),
+        labels: Array.from({ length: 30 }, (_, i) => `${i + 1}-kun`),
         actual: [10.5, 10.8, 10.2, 11.1, 10.9, 11.5, 11.2, 10.8, 11.4, 11.0, 10.7, 11.3, 10.9, 11.6, 11.1],
         predicted: [11.2, 10.9, 11.5, 11.0, 10.6, 11.3, 10.8, 11.4, 10.7, 11.1, 10.9, 11.5, 11.2, 10.8, 11.4, 11.0, 10.7, 11.3, 10.9, 11.6, 11.2, 10.8, 11.4, 11.1, 10.7, 11.3, 10.9, 11.5, 11.2, 10.8],
         upperBound: [11.8, 11.5, 12.1, 11.6, 11.2, 11.9, 11.4, 12.0, 11.3, 11.7, 11.5, 12.1, 11.8, 11.4, 12.0, 11.6, 11.3, 11.9, 11.5, 12.2, 11.8, 11.4, 12.0, 11.7, 11.3, 11.9, 11.5, 12.1, 11.8, 11.4],
         lowerBound: [10.6, 10.3, 10.9, 10.4, 10.0, 10.7, 10.2, 10.8, 10.1, 10.5, 10.3, 10.9, 10.6, 10.2, 10.8, 10.4, 10.1, 10.7, 10.3, 11.0, 10.6, 10.2, 10.8, 10.5, 10.1, 10.7, 10.3, 10.9, 10.6, 10.2]
     },
     60: {
-        labels: Array.from({length: 60}, (_, i) => `${i + 1}-kun`),
+        labels: Array.from({ length: 60 }, (_, i) => `${i + 1}-kun`),
         actual: [10.5, 10.8, 10.2, 11.1, 10.9, 11.5, 11.2, 10.8, 11.4, 11.0, 10.7, 11.3, 10.9, 11.6, 11.1],
-        predicted: Array.from({length: 60}, (_, i) => 10.5 + Math.sin(i / 5) * 1.2 + (i * 0.02)),
-        upperBound: Array.from({length: 60}, (_, i) => 11.1 + Math.sin(i / 5) * 1.2 + (i * 0.02)),
-        lowerBound: Array.from({length: 60}, (_, i) => 9.9 + Math.sin(i / 5) * 1.2 + (i * 0.02))
+        predicted: Array.from({ length: 60 }, (_, i) => 10.5 + Math.sin(i / 5) * 1.2 + (i * 0.02)),
+        upperBound: Array.from({ length: 60 }, (_, i) => 11.1 + Math.sin(i / 5) * 1.2 + (i * 0.02)),
+        lowerBound: Array.from({ length: 60 }, (_, i) => 9.9 + Math.sin(i / 5) * 1.2 + (i * 0.02))
     },
     90: {
-        labels: Array.from({length: 90}, (_, i) => `${i + 1}-kun`),
+        labels: Array.from({ length: 90 }, (_, i) => `${i + 1}-kun`),
         actual: [10.5, 10.8, 10.2, 11.1, 10.9, 11.5, 11.2, 10.8, 11.4, 11.0, 10.7, 11.3, 10.9, 11.6, 11.1],
-        predicted: Array.from({length: 90}, (_, i) => 10.5 + Math.sin(i / 7) * 1.5 + (i * 0.015)),
-        upperBound: Array.from({length: 90}, (_, i) => 11.2 + Math.sin(i / 7) * 1.5 + (i * 0.015)),
-        lowerBound: Array.from({length: 90}, (_, i) => 9.8 + Math.sin(i / 7) * 1.5 + (i * 0.015))
+        predicted: Array.from({ length: 90 }, (_, i) => 10.5 + Math.sin(i / 7) * 1.5 + (i * 0.015)),
+        upperBound: Array.from({ length: 90 }, (_, i) => 11.2 + Math.sin(i / 7) * 1.5 + (i * 0.015)),
+        lowerBound: Array.from({ length: 90 }, (_, i) => 9.8 + Math.sin(i / 7) * 1.5 + (i * 0.015))
     }
 };
 
@@ -36,7 +71,7 @@ function initForecastChart() {
 
     const ctx = document.getElementById('forecastChart').getContext('2d');
     const data = forecastData[currentForecastPeriod];
-    
+
     forecastChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -107,7 +142,7 @@ function initForecastChart() {
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             if (context.parsed.y !== null) {
                                 return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + 'M so\'m';
                             }
@@ -121,7 +156,7 @@ function initForecastChart() {
                     beginAtZero: false,
                     ticks: {
                         color: textColor,
-                        callback: function(value) {
+                        callback: function (value) {
                             return value.toFixed(1) + 'M';
                         }
                     },
@@ -146,7 +181,7 @@ function initForecastChart() {
 // Update forecast period
 function updateForecastPeriod(days) {
     currentForecastPeriod = days;
-    
+
     // Update button styles
     [30, 60, 90].forEach(d => {
         const btn = document.getElementById('btn-' + d);
@@ -158,7 +193,7 @@ function updateForecastPeriod(days) {
             btn.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
         }
     });
-    
+
     // Update chart
     updateForecastChart();
 }
@@ -166,13 +201,13 @@ function updateForecastPeriod(days) {
 // Update forecast chart with new data
 function updateForecastChart() {
     const data = forecastData[currentForecastPeriod];
-    
+
     forecastChart.data.labels = data.labels;
     forecastChart.data.datasets[0].data = data.actual.concat(Array(data.predicted.length - data.actual.length).fill(null));
     forecastChart.data.datasets[1].data = Array(data.actual.length).fill(null).concat(data.predicted.slice(data.actual.length));
     forecastChart.data.datasets[2].data = Array(data.actual.length).fill(null).concat(data.upperBound.slice(data.actual.length));
     forecastChart.data.datasets[3].data = Array(data.actual.length).fill(null).concat(data.lowerBound.slice(data.actual.length));
-    
+
     forecastChart.update();
 }
 
@@ -187,13 +222,13 @@ const aiResponses = {
 function sendMessage() {
     const input = document.getElementById('chat-input');
     const message = input.value.trim();
-    
+
     if (!message) return;
-    
+
     // Add user message
     addMessage(message, 'user');
     input.value = '';
-    
+
     // Simulate AI response
     setTimeout(() => {
         const response = getAIResponse(message);
@@ -208,7 +243,7 @@ function quickQuestion(question) {
 
 function getAIResponse(message) {
     const lowerMessage = message.toLowerCase();
-    
+
     if (lowerMessage.includes('xarajat') || lowerMessage.includes('kamaytir')) {
         return aiResponses.xarajat;
     } else if (lowerMessage.includes('qarz') || lowerMessage.includes('to\'la')) {
@@ -224,7 +259,7 @@ function addMessage(text, sender) {
     const messagesContainer = document.getElementById('chat-messages');
     const messageDiv = document.createElement('div');
     messageDiv.className = 'flex gap-3';
-    
+
     if (sender === 'user') {
         messageDiv.innerHTML = `
             <div class="flex-1"></div>
@@ -249,28 +284,28 @@ function addMessage(text, sender) {
             </div>
         `;
     }
-    
+
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
 // Enter key to send message
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const chatInput = document.getElementById('chat-input');
     if (chatInput) {
-        chatInput.addEventListener('keypress', function(e) {
+        chatInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 sendMessage();
             }
         });
     }
-    
+
     // Initialize chart
     initForecastChart();
-    
+
     // Watch for theme changes
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
+    const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
             if (mutation.attributeName === 'class') {
                 if (forecastChart) {
                     forecastChart.destroy();
@@ -279,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     observer.observe(document.documentElement, {
         attributes: true
     });

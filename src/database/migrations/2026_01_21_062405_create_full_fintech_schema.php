@@ -20,10 +20,10 @@ return new class extends Migration {
          Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['owner','bank','leasing','investor','admin'])->default('owner');
+            $table->bigInteger('one_id');
             $table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();
             $table->rememberToken();
             $table->timestamps();
@@ -43,30 +43,13 @@ return new class extends Migration {
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
-        
-        Schema::create('accounts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->enum('type', ['cash','bank','wallet']);
-            $table->decimal('balance', 15, 2)->default(0);
-            $table->timestamps();
-        });
-
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->enum('type', ['income','expense']);
-        });
 
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('account_id')->constrained()->cascadeOnDelete();
             $table->enum('type', ['income','expense']);
             $table->decimal('amount', 15, 2);
             $table->string('description')->nullable();
-            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
             $table->date('transaction_date');
             $table->timestamps();
         });
@@ -141,8 +124,6 @@ return new class extends Migration {
         Schema::dropIfExists('forecasts');
         Schema::dropIfExists('cashflow_summary');
         Schema::dropIfExists('transactions');
-        Schema::dropIfExists('categories');
-        Schema::dropIfExists('accounts');
         Schema::dropIfExists('users');
         Schema::dropIfExists('companies');
     }

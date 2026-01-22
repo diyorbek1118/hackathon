@@ -7,3 +7,6 @@ Route::get('/', [PageController::class, 'main']);
 Route::get('pages/main', [PageController::class, 'main'])->name('pages.main');
 Route::get('pages/statistics', [PageController::class, 'statistics'])->name('pages.statistics');
 Route::get('pages/forecast', [PageController::class, 'forecast'])->name('pages.forecast');
+Route::get('pages/login', [PageController::class, 'login'])->name('pages.login');
+
+Route::get('pages/chartData', [PageController::class, 'chartData'])->name('pages.chartData');
