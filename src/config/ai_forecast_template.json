@@ -1,0 +1,91 @@
+{
+  "ai_server": {
+    "url": "http://localhost:11434/api/generate",
+    "model": "llama3.2",
+    "timeout": 60,
+    "options": {
+      "temperature": 0.3,
+      "top_p": 0.9,
+      "max_tokens": 2000
+    }
+  },
+  "prompt_template": {
+    "role": "You are a financial AI assistant specializing in cash flow forecasting. Analyze the historical cash flow data and generate accurate predictions for the next {months_to_predict} months.",
+    "instructions": [
+      "Consider seasonal patterns in the historical data",
+      "Analyze income and expense trends",
+      "Evaluate net cash flow patterns",
+      "Factor in industry-specific considerations",
+      "Account for economic indicators"
+    ],
+    "output_format": {
+      "type": "json_array",
+      "structure": [
+        {
+          "month": "YYYY-MM-01 (first day of predicted month)",
+          "predicted_income": "decimal (15,2)",
+          "predicted_expense": "decimal (15,2)", 
+          "predicted_balance": "decimal (15,2)",
+          "risk_level": "enum: low|medium|high",
+          "confidence_score": "float (0.1-1.0)",
+          "insights": "string (brief explanation)"
+        }
+      ]
+    },
+    "risk_criteria": {
+      "low": "Positive cash flow, stable patterns",
+      "medium": "Moderate cash flow, some volatility", 
+      "high": "Negative cash flow or high volatility"
+    }
+  },
+  "data_mapping": {
+    "input": {
+      "company": {
+        "name": "string",
+        "industry": "string", 
+        "currency": "string (default: UZS)",
+        "monthly_avg_income": "decimal (15,2)",
+        "monthly_avg_expense": "decimal (15,2)"
+      },
+      "historical_data": {
+        "table": "cashflow_summary",
+        "fields": [
+          "date (YYYY-MM-DD)",
+          "total_income (decimal 15,2)",
+          "total_expense (decimal 15,2)",
+          "net_cashflow (decimal 15,2)",
+          "balance (decimal 15,2)"
+        ],
+        "sort_by": "date ASC",
+        "min_records": 3
+      }
+    },
+    "output": {
+      "table": "forecasts",
+      "fields": [
+        "company_id (foreign key)",
+        "forecast_start (date)",
+        "forecast_end (date)", 
+        "predicted_income (decimal 15,2)",
+        "predicted_expense (decimal 15,2)",
+        "predicted_balance (decimal 15,2)",
+        "risk_level (enum: low|medium|high)"
+      ]
+    }
+  },
+  "validation_rules": {
+    "months_to_predict": {
+      "min": 1,
+      "max": 12,
+      "default": 6
+    },
+    "required_historical_months": 3,
+    "confidence_threshold": 0.5
+  },
+  "error_handling": {
+    "no_data": "No historical data found for this company",
+    "ai_server_error": "AI server error: {status}",
+    "invalid_response": "Invalid AI response format",
+    "parsing_error": "Failed to parse AI response: {error}"
+  }
+}

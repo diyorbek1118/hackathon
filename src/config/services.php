@@ -35,4 +35,25 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | AI Services Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configuration for AI services including Ollama, OpenAI, and other
+    | machine learning services used for forecasting and analysis.
+    |
+    */
+
+    'ai_server' => [
+        'url' => env('AI_SERVER_URL', 'http://localhost:11434/api/generate'),
+        'model' => env('AI_MODEL', 'llama3.2'),
+        'timeout' => env('AI_TIMEOUT', 60),
+        'options' => [
+            'temperature' => env('AI_TEMPERATURE', 0.3),
+            'top_p' => env('AI_TOP_P', 0.9),
+            'max_tokens' => env('AI_MAX_TOKENS', 2000),
+        ],
+    ],
+
 ];
