@@ -2,18 +2,17 @@
 
 namespace App\View\Components;
 
+use App\Models\CashflowSummary;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class app extends Component
 {
-    /**
-     * Create a new component instance.
-     */
+    public $chartData;
     public function __construct()
     {
-        //
+        $this->chartData = CashflowSummary::all();
     }
 
     /**
